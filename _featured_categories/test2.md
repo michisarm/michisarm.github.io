@@ -5,4 +5,5 @@ slug: test2 slug
 description: >
   test2 description
 menu: true
+submenu: true
 ---
