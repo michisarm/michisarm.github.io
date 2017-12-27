@@ -1,13 +1,13 @@
 ---
 layout: post
-title: test Content
+title: test3 Content
 description: >
-  test description
+  test3 description
 image: /assets/img/default.jpg
 # hide_description: true
 # hide_image: true
 categories: test
-tags: [example, content]
+tags: example, content
 ---
 
 test contents
