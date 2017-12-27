@@ -13,5 +13,5 @@ description: >
   test description
 
 # Setting `menu` will generate an entry in the sidebar for this category.
-# menu: true
+menu: true
 ---
