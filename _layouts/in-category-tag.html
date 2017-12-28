@@ -3,11 +3,6 @@ layout: base
 ---
 
 {% assign posts = site.tags[page.slug] | where: "categories", page.category %}
-{{ page.slug }}
-{{ page.category }}
-{{ page }}
-{{ page.title }}
-{{ posts }}
 {% if page.title.size > 0 %}
   <header>
     <h1 class="page-title">{{ page.title }}</h1>
