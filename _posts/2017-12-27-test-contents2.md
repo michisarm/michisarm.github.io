@@ -5,7 +5,7 @@ description: >
   test3 description
 image: /assets/img/default.jpg
 categories: test
-tags: test
+tags: example
 comments: true
 ---
 
