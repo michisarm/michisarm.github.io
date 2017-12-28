@@ -1,9 +1,9 @@
 ---
 layout: list
-title: test title
-slug: test slug
-description: >
-  test description
+title: Test
+slug: test
 menu: true
 submenu: true
+description: >
+  test description
 ---

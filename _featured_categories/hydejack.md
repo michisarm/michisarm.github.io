@@ -1,9 +1,9 @@
 ---
 layout: list
-title: hydejack
-slug: test hydejack
-description: >
-  test hydejack
+title: Hydejack
+slug: hydejack
 menu: true
 submenu: true
+description: >
+  test hydejack
 ---

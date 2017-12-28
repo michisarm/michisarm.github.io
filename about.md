@@ -12,7 +12,7 @@ description: >
   test about description
 
 # You can show the description on the page by deleting this line:
-hide_description: true
+# hide_description: true
 
 # Setting `menu` will generate an entry in the sidebar.
 menu: true
