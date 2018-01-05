@@ -1,0 +1,210 @@
+// tags menu expand
+.expand label{
+  width: 100%;
+  cursor:pointer;
+}
+
+.expand .arrow {
+  right: 10px;
+  position: absolute;
+}
+
+.expand input{
+  display: none;
+}
+
+.expand ul{
+  height: 0;
+  transform: scaleY(0);
+}
+
+.expand input:checked ~ ul{
+  list-style: none;
+  height: 100%;
+  transform-origin: top;
+  transition: transform .2s ease-out;
+  transform: scaleY(1);
+}
+
+.navbar {
+  height: 50px;
+}
+
+#search {
+    position: absolute;
+    z-index: 99;
+    top: 0;
+    right: 10px;
+    height: 60px;
+    margin: 0;
+    padding: 0;
+    line-height: 60px;
+}
+
+#search > input {
+    margin: 0;
+    width: 150px;
+    height: 33px;
+    border-radius: 17px;
+    border: 1px solid #e6e6e6;
+    padding: 0 30px 0 15px;
+    font-size: 14px;
+    color: #505050;
+    background: url(/assets/img/icon_search.png) no-repeat right;
+    background-size: 13px 13px;
+    background-position-x: 127px;
+}
+
+#search > input:focus {
+    outline: none;
+    color: #1e1e1e;
+}
+
+#search-toggle {
+    z-index: 100;
+}
+
+/** Search result dropdown **/
+.search__results {
+    display: block;
+    text-align: left;
+    background: #fff;
+    list-style: none;
+    padding: 0px;
+    font-size: 14px;
+    transition: 0.2s ease;
+    position: absolute;
+    width: 550px;
+    -webkit-box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+    box-shadow: 0 8px 17px 0 rgba(0,0,0,.2), 0 6px 20px 0 rgba(0,0,0,.19);
+    border-radius: 2px;
+    border: 0;
+    z-index: 999; top: 50px; right: 0px;
+    line-height: 22px;
+}
+.search__results.is-hidden {
+    opacity: 0;
+    transform: translateY(-1vh);
+    display: none;
+}
+.search__results > li {
+    border-top: 1px solid #f0f0f0;
+    padding: 10px;
+}
+.search__results > li > a {
+    padding: 10px;
+}
+
+#back-to-top {
+    display: none; /* @@iolo: show/hide by js */
+    position: fixed;
+    width: 29px;
+    height: 29px;
+    right: 30px;
+    bottom: 20px;
+    z-index: 999;
+    background: url(/assets/img/icon_uarrow.png) no-repeat;
+    background-size: 29px 29px;
+}
+
+#back-to-top.static {
+    position: static;
+    float: right;
+    margin-top: 51px; /* 51px = 100(content-footer-spacing) - 29(self height) - 20(bottom) */
+    margin-right: 30px;
+}
+
+@media only screen and (min-width: 720px) {
+    #search {
+        display: block !important;
+    }
+
+    #search-toggle {
+        display: none;
+    }
+}
+
+@media only screen and (max-width: 720px) {
+    #search-toggle {
+        position: absolute;
+        top: 0;
+        width: 50px;
+        height: 50px;
+        margin: 5px 0 0 0px;
+        padding: 0;
+        border: none;
+        outline: none;
+    }
+
+    #search-toggle {
+        right: 0;
+        background: url(/assets/img/icon_search.png) no-repeat center;
+        background-size: 22px 22px;
+    }
+
+    #search {
+        display: none;
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        background: #fff;
+        text-align: center;
+    }
+
+    #search > input {
+        background-image: url(/assets/img/icon_search.png);
+    }
+
+    .search__results {
+        width: 100%;
+        font-size: 12px;
+        top: 60px;
+    }
+
+    #back-to-top {
+        width: 36px;
+        height: 36px;
+        right: 20px;
+        background-image: url(/assets/img/icon_uarrow.png);
+        background-size: 36px 36px;
+    }
+
+    #back-to-top.static {
+        margin-top: 44px; /* 51px = 100(content-footer-spacing) - 36(self height) - 20(bottom) */
+        margin-right: 20px;
+    }
+
+}
+
+/* responsive images - mobile(2x) */
+
+@media (-webkit-min-device-pixel-ratio: 2) {
+    #search-toggle {
+        background-image: url(/assets/img/icon_search@2x.png);
+    }
+
+    #search > input {
+        background-image: url(/assets/img/icon_search@2x.png);
+    }
+
+    #back-to-top {
+        background-image: url(/assets/img/icon_uarrow@2x.png);
+    }
+}
+
+/* responsive images - mobile(3x) */
+
+@media (-webkit-min-device-pixel-ratio: 3) {
+    #search-toggle {
+        background-image: url(/assets/img/icon_search@3x.png);
+    }
+
+    #search > input {
+        background-image: url(/assets/img/icon_search@3x.png);
+    }
+
+    #back-to-top {
+        background-image: url(/assets/img/icon_uarrow@3x.png);
+    }
+}
