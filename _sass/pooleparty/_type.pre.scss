@@ -25,7 +25,7 @@ h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6 {
 }
 
 .heading {
-  font-weight: $font-weight-heading;
+  //font-weight: $font-weight-heading;
 }
 
 h1, .h1 {
@@ -148,8 +148,10 @@ blockquote {
 
 .read-more {
   @extend .faded;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  // margin-top: 2rem;
+  // margin-bottom: 3rem;
+  text-align: right;
+  margin: 2rem 1rem 0 0;
 
   &::after {
     content: " \2192"; // →

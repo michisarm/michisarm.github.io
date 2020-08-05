@@ -33,7 +33,7 @@
 
 
 h1, h2, h3, h4, h5, h6, .h1, .h2, .h3, .h4, .h5, .h6, .heading {
-  text-rendering: optimizeLegibility; 
+  text-rendering: optimizeLegibility;
 }
 
 h1 + h2, .h1 + .h2, h1 + .h2, .h1 + h2,
@@ -95,8 +95,10 @@ blockquote {
 
 .read-more {
   @extend .faded;
-  margin-top: 2rem;
-  margin-bottom: 3rem;
+  // margin-top: 2rem;
+  // margin-bottom: 3rem;
+  text-align: right;
+  margin: 2rem 1rem 0 0;
 
   &::after {
     content: " \2192"; // →
@@ -158,4 +160,3 @@ h1[id], h2[id], h3[id], h4[id], h5[id], h6[id] {
     break-after: avoid-page;
   }
 }
-
