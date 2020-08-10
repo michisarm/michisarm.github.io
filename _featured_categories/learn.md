@@ -1,8 +1,8 @@
 ---
 layout: list
-title: Test2
-slug: test2
+title: learn
+slug: learn
 menu: true
 description: >
-  test2 description
+  배움
 ---

@@ -36,7 +36,7 @@ const { find } = Array.prototype;
 
 const BORDER_COLOR_FADE = 0.8;
 
-function updateStyle({ color = '#4fb1ba', themeColor } = {}) {
+function updateStyle({ color = '#a29b40', themeColor } = {}) {
   if (this.themeColor) {
     this.themeColor.content = themeColor || color;
   }

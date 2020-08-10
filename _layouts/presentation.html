@@ -9,7 +9,15 @@
 		<link rel="stylesheet" href="/assets/reveal/css/theme/black.css">
 
 		<!-- Theme used for syntax highlighting of code -->
-		<link rel="stylesheet" href="/assets/reveal/lib/css/zenburn.css">
+		<!-- <link rel="stylesheet" href="/assets/reveal/lib/css/zenburn.css"> -->
+    <!-- code -->
+    <link rel="stylesheet" href="lib/css/monokai.css">
+    <script src="plugin/highlight/highlight.js"></script>
+    <script>
+      Reveal.initialize({
+        plugins: [ RevealHighlight ]
+      });
+    </script>
 
 		<!-- Printing and PDF exports -->
 		<script>

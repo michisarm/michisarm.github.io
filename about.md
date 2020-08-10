@@ -8,8 +8,8 @@ title: About
 
 # Write a short (~150 characters) description of each blog post.
 # This description is used to preview the page on search engines, social media, etc.
-description: >
-  test about description
+# description: >
+#   test about description
 
 # You can show the description on the page by deleting this line:
 # hide_description: true
@@ -18,22 +18,22 @@ description: >
 menu: true
 ---
 
-**Hydejack** is the complete package for professionals on the web.
+<!-- **Hydejack** is the complete package for professionals on the web.
 It features a blog suitable for both prose and technical documentation,
-a showcase for your projects, and a resume that is well-integrated with the design.
+a showcase for your projects, and a resume that is well-integrated with the design. -->
 
-> Your presence on the web --- A [blog], a [portfolio] and a [resume].
+> [github]
 {:.lead}
 
-## Download
+<!-- ## Download
 There are two versions of **Hydejack**: The *free version* includes basic blogging functionality,
 as did previous versions of the theme.
 The *PRO version* includes additional features for professionals:
-A [portfolio], a [resume] layout and a [welcome] page to feature your favorite projects and posts.
+A [portfolio], a [resume] layout and a [welcome] page to feature your favorite projects and posts. -->
 
-This table details what is and isn't included in each respective version.
+<!-- This table details what is and isn't included in each respective version. -->
 
-|                                     | Free                                   | PRO                                          |
+<!-- |                                     | Free                                   | PRO                                          |
 |:------------------------------------|:--------------------------------------:|:--------------------------------------------:|
 | Blog                                | &#x2714;                               | &#x2714;                                     |
 | [Features][feat]                    | &#x2714;                               | &#x2714;                                     |
@@ -48,14 +48,14 @@ This table details what is and isn't included in each respective version.
 | Support[^1]                         | No                                     | No                                           |
 | Price                               | Free                                   | $29                                          |
 |                                     | [**Download**][kit]                    | [**Buy Now - $29**][buy] [^2]                |
-{:.stretch-table}
+{:.stretch-table} -->
 
-[^1]: You MAY open an issue on GitHub, but no response and/or fix is guaranteed.
+<!-- [^1]: You MAY open an issue on GitHub, but no response and/or fix is guaranteed.
       You understand that using Jekyll requires technical know-how, and is NOT comparable to Wordpress in terms of usability.
       Please use the free version to confirm that Hydejack works for you.
-      For more, see the [PRO] license.
+      For more, see the [PRO] license. -->
 
-## Features
+<!-- ## Features
 Both versions include these features:
 
 * Full in-app page loading, powered by [hy-push-state]{:.external}
@@ -79,19 +79,19 @@ Both versions include these features:
 * Github avatars via `jekyll-avatar` (optional)
 * Gist support via `jekyll-gist` (optional)
 
-[^4]: Actual page load speed depends on your hosting provider, resolution of embedded images and usage of 3rd party plugins.  
+[^4]: Actual page load speed depends on your hosting provider, resolution of embedded images and usage of 3rd party plugins.   -->
 
-### Syntax Highlighting
-Syntax highlighting powered by [Rouge].
+<!-- ### Syntax Highlighting
+Syntax highlighting powered by [Rouge]. -->
 
-~~~ruby
+<!-- ~~~ruby
 # Ruby code with syntax highlighting
 GitHubPages::Dependencies.gems.each do |gem, version|
   s.add_dependency(gem, "= #{version}")
 end
-~~~
+~~~ -->
 
-### LaTeX Math Blocks
+<!-- ### LaTeX Math Blocks
 Write formulas in familiar LaTeX syntax. Powered by [KaTeX].
 
 $$
@@ -110,33 +110,33 @@ $$
                  y_n
                \end{array}\right)
 \end{aligned}
-$$
+$$ -->
 
-### Newsletter Subscription Box*
+<!-- ### Newsletter Subscription Box*
 The *PRO version* has built-in support for [Tinyletter] subscription boxes.
 
 If you are using a different newsletter service, like MailChimp,
-you can build a custom newsletter subscription box using [custom forms][forms].
+you can build a custom newsletter subscription box using [custom forms][forms]. -->
 
-## Versions
+<!-- ## Versions
 ### Free Version
 The *free version* features the design and tech of **Hydejack**, but only supports basic blogging.
 
-[**Download**][kit]
+[**Download**][kit] -->
 
-### PRO Version
+<!-- ### PRO Version
 The *PRO version* aims to be the complete package for professionals on the web.
 It includes layouts for your [portfolio],
 your [resume] (with support for [JSON Resume](https://jsonresume.org/)),
 a [welcome] page to introduce yourself to visitors,
-built-in support for [Tinyletter], and from element styles so you can build arbitrary contact forms.
+built-in support for [Tinyletter], and from element styles so you can build arbitrary contact forms. -->
 
-[**Buy Now - $29**][buy] [^2]
+<!-- [**Buy Now - $29**][buy] [^2]
 
 [^2]: Transactions secured by [Stripe](https://stripe.com). Downloads handled by [Simple Goods](https://simplegoods.co/).  
-
-[blog]: https://qwtel.com/hydejack/blog/
-[portfolio]: https://qwtel.com/hydejack/variations/
+ -->
+[github]: https://github.com/michisarm
+<!-- [portfolio]: https://qwtel.com/hydejack/variations/
 [resume]: https://qwtel.com/hydejack/resume/
 [download]: https://qwtel.com/download/
 [welcome]: https://qwtel.com/hydejack/
@@ -163,6 +163,6 @@ built-in support for [Tinyletter], and from element styles so you can build arbi
 [hy-drawer]: https://qwtel.com/hy-drawer/
 [rouge]: http://rouge.jneen.net
 [katex]: https://khan.github.io/KaTeX/
-[tinyletter]: https://tinyletter.com/
+[tinyletter]: https://tinyletter.com/ -->
 
-*[FLIP]: First-Last-Invert-Play. A coding technique to achieve performant page transition animations.
+<!-- *[FLIP]: First-Last-Invert-Play. A coding technique to achieve performant page transition animations. -->

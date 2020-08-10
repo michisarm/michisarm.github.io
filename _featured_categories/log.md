@@ -1,8 +1,8 @@
 ---
 layout: list
-title: Hydejack
-slug: hydejack
+title: log
+slug: log
 menu: true
 description: >
-  test hydejack
+  개발 흔적
 ---

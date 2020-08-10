@@ -31,7 +31,7 @@ description:           >
 
 # A shorter description for the sidebar.
 tagline:               >
-  test tagline
+  여행, 먹을것, 먹으러가는 여행을 좋아합니다.
 
 # A list of keywords for your blog.
 keywords:              []
@@ -62,8 +62,8 @@ paginate_path:         /page-:num/
 # ========================================================================================
 
 # Sidebar image and theme color of the site.
-accent_image:          /assets/img/sidebar-bg.jpg
-accent_color:          '#4fb1ba'
+accent_image:          /assets/img/seoul.jpg
+accent_color:          '#a29b40'
 
 # The string encoding which fonts to fetch from Google Fonts.
 # See: <https://qwtel.com/hydejack/docs/configuration/>
