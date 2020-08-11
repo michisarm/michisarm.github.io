@@ -1,0 +1,21 @@
+.reveal pre code {
+  font-size: 15px;
+  max-height: 500px;
+}
+.reveal h2 {
+  font-size: 1.2em;
+}
+.reveal p.h-position {
+  position: fixed;
+  top: 0;
+  font-size: 15px;
+}
+.reveal p.b-position {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  font-size: 12px;
+}
+.reveal .b-white {
+  background: white;
+}

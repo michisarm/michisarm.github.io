@@ -5,28 +5,26 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>{{ page.title }}</title>
 
-		<link rel="stylesheet" href="/assets/reveal/css/reveal.css">
-		<link rel="stylesheet" href="/assets/reveal/css/theme/black.css">
+		<!-- <link rel="stylesheet" href="/assets/reveal/css/reveal.css"> -->
+		<!-- <link rel="stylesheet" href="/assets/reveal/css/theme/black.css"> -->
 
 		<!-- Theme used for syntax highlighting of code -->
-		<!-- <link rel="stylesheet" href="/assets/reveal/lib/css/zenburn.css"> -->
-    <!-- code -->
-    <link rel="stylesheet" href="lib/css/monokai.css">
-    <script src="plugin/highlight/highlight.js"></script>
-    <script>
-      Reveal.initialize({
-        plugins: [ RevealHighlight ]
-      });
-    </script>
+    <!-- <link rel="stylesheet" href="/assets/reveal/lib/css/zenburn.css"> -->
+    
 
+    <link rel="stylesheet" href="/assets/revealjs/dist/reset.css">
+		<link rel="stylesheet" href="/assets/revealjs/dist/reveal.css">
+    <link rel="stylesheet" href="/assets/revealjs/dist/theme/black.css" id="theme">
+    <link rel="stylesheet" href="/assets/revealjs/plugin/highlight/monokai.css" id="highlight-theme">
+    <link rel="stylesheet" href="/assets/revealjs/css/custom.css">
 		<!-- Printing and PDF exports -->
-		<script>
+		<!-- <script>
 			var link = document.createElement( 'link' );
 			link.rel = 'stylesheet';
 			link.type = 'text/css';
 			link.href = window.location.search.match( /print-pdf/gi ) ? '/assets/reveal/css/print/pdf.css' : '/assets/reveal/css/print/paper.css';
 			document.getElementsByTagName( 'head' )[0].appendChild( link );
-		</script>
+		</script> -->
 	</head>
 	<body>
 		<div class="reveal">
@@ -35,21 +33,26 @@
 			</div>
 		</div>
 
-		<script src="/assets/reveal/lib/js/head.min.js"></script>
-		<script src="/assets/reveal/js/reveal.js"></script>
-
+		<script src="/assets/revealjs/dist/reveal.js"></script>
+		<script src="/assets/revealjs/plugin/zoom/zoom.js"></script>
+		<script src="/assets/revealjs/plugin/notes/notes.js"></script>
+		<script src="/assets/revealjs/plugin/search/search.js"></script>
+		<script src="/assets/revealjs/plugin/markdown/markdown.js"></script>
+		<script src="/assets/revealjs/plugin/highlight/highlight.js"></script>
 		<script>
-			// More info about config & dependencies:
-			// - https://github.com/hakimel/reveal.js#configuration
-			// - https://github.com/hakimel/reveal.js#dependencies
+
+			// Also available as an ES module, see:
+			// https://revealjs.com/initialization/
 			Reveal.initialize({
-				dependencies: [
-					{ src: '/assets/reveal/plugin/markdown/marked.js' },
-					{ src: '/assets/reveal/plugin/markdown/markdown.js' },
-					{ src: '/assets/reveal/plugin/notes/notes.js', async: true },
-					{ src: '/assets/reveal/plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
-				]
+				controls: true,
+				progress: true,
+				center: true,
+				hash: true,
+
+				// Learn about plugins: https://revealjs.com/plugins/
+				plugins: [ RevealZoom, RevealNotes, RevealSearch, RevealMarkdown, RevealHighlight ]
 			});
+
 		</script>
 	</body>
 </html>
