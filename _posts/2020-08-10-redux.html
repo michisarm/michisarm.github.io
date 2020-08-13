@@ -7,26 +7,41 @@ image: /assets/img/default.jpg
 categories: learn
 tags: react
 ---
+<section data-markdown>
+  <textarea data-template>
+    ### 발표자료
+    [https://michisarm.github.io/learn/2020/08/10/redux](https://michisarm.github.io/learn/2020/08/10/redux)
+    
+    ----
 
+    ### 예제
+    ```
+    $ git clone https://github.com/michisarm/redux_example.git
+    ```
+  </textarea>
+</section>
 
 <section>Redux 살펴보기</section>
+
 <section data-markdown>
   <textarea data-template>
     ### 목차
     1. redux 왜 쓰나요
-    2. redux state 관리 라이브러리
-    3. redux 구현 예제
-    3. redux 어디에 쓰나요 ( 언제 무슨 변수에 사용할지 결정 )
-    4. redux 로 전부 쓴다면 어떻게 될까 ( redux값 변경시 렌더 생성 확인 )
-    5. redux 구현 방법 고민 ducks pattern ( middleware 선택 saga or thunk)
-    6. redux 사용 라이브 코딩 예제 ( github 자료 다운로드 )
-    7. redux 설치
-    8. react saga도 써볼까
+    2. react 구현 예제 ( github 자료 다운로드 )
+    3. redux
+    4. redux ducks pattern
+    5. redux 구현 예제 ( ducks pattern )
+    6. redux 실습
+    7. redux 어디에 쓰나요
   </textarea>
 </section>
+
+
+
 <section>
   1. redux 왜 쓰나요
 </section>
+
 <section>
   <section>
     <p class="h-position">1. redux 왜 쓰나요</p>
@@ -65,10 +80,10 @@ tags: react
     </aside>
   </section>
 </section>
-<section>2. redux state 관리 라이브러리</section>
+
 <section>
-  <section>
-    <p class="h-position">2. redux state 관리 라이브러리</p>
+  <section data-auto-animate>
+    <p class="h-position">1. redux 왜 쓰나요</p>
     <img data-src="/image/redux/react_dev.png">
     <p class="b-position">이미지 : <a href="https://if.kakao.com/2019/program">https://if.kakao.com/2019/program</a></p>
     <aside class="notes">
@@ -77,9 +92,10 @@ tags: react
     </aside>
   </section>  
 </section>
+
 <section>
-  <section>
-    <p class="h-position">2. redux state 관리 라이브러리</p>
+  <section data-auto-animate>
+    <p class="h-position">1. redux 왜 쓰나요</p>
     <img data-src="/image/redux/trend.png" style="height: 550px;">
     <p class="b-position"><a href="https://trends.google.com/trends/explore?date=today%205-y&q=redux,mobx">google trend redux, mobx</a></p>
     <aside class="notes">
@@ -91,35 +107,1212 @@ tags: react
 </section>
 
 
+<section>
+  2. react 구현 예제
+</section>
+<section data-markdown>
+  <textarea data-template>
+    ### 예제 실행
+    ```
+    $ git clone https://github.com/michisarm/redux_example.git
+    $ cd redux_example
+    $ yarn install
+    $ git checkout start
+    $ yarn start
+    ```
+  </textarea>
+</section>
+
+<section>
 <section data-auto-animate>
-  <h2 data-id="code-title">redux</h2>
-  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|4,8-11|17|22-24">
-    import React, { useState } from 'react';
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">Todos.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|3-4|9-28|79,84">
+    import React, { Component } from 'react';
 
-    function Example() {
-      const [count, setCount] = useState(0);
+    import Todo from './Todo';
+    import AddTodo from './AddTodo';
 
-      return (
-        &lt;div&gt;
-          &lt;p&gt;You clicked {count} times&lt;/p&gt;
-          &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-            Click me
-          &lt;/button&gt;
-        &lt;/div&gt;
-      );
+    class Todos extends Component {
+
+        //Component state with default values
+        state = {
+            addTodoValue: "",
+            todos: [
+                {
+                    id: 1,
+                    value: "todo 1",
+                    isDone: false
+                },
+                {
+                    id: 2,
+                    value: "todo 2",
+                    isDone: true
+                },
+                {
+                    id: 3,
+                    value: "todo 3",
+                    isDone: false
+                }
+            ]
+        }
+
+        //Local helper method to get date
+        getTime() {
+            let d = new Date();
+            var n = d.getTime();
+            return n;
+        }
+
+        //method called from Todo component
+        handleDelete = todo => {
+            const todos = this.state.todos.filter((t) => {
+                return t.id !== todo
+            });
+            this.setState({ todos });
+        }
+
+        handleDone = todo => {
+            const todos = [...this.state.todos];
+            todos.map((t) => {
+                if (t.id === todo.id) {
+                    t.isDone = !t.isDone;
+                }
+                return t;
+            });
+            this.setState({todos});
+        }
+
+        //method called from AddTodo component
+        addNewTodo = value => {
+            if (value) {
+                const todos = [...this.state.todos];
+                todos.push(
+                    {
+                        id: this.getTime(),
+                        value: value,
+                        isDone: false
+                    }
+                );
+                this.setState({ addTodoValue: "", todos })
+            } else {
+                console.log("Please Add Todo Text");
+            }
+        }
+
+        render() {
+            return (
+              &lt;table className="table"&gt;
+                &lt;tbody&gt;
+                    {this.state.todos.map((todo, index) =&gt; (
+                        &lt;tr key={todo.id}&gt;
+                            &lt;Todo index={index+1} todo={todo} fooDelete={this.handleDelete} fooDoneDone={this.handleDone} /&gt;
+                        &lt;/tr&gt;
+                    ))}
+                    &lt;tr&gt;
+                        &lt;td colSpan="4" className="text-center"&gt;
+                            &lt;AddTodo fooAddTodo={this.addNewTodo} addTodoValue={this.state.addTodoValue} /&gt;
+                        &lt;/td&gt;
+                    &lt;/tr&gt;
+                &lt;/tbody&gt;
+            &lt;/table&gt;
+            );
+        }
     }
 
-    function SecondExample() {
-      const [count, setCount] = useState(0);
-
-      return (
-        &lt;div&gt;
-          &lt;p&gt;You clicked {count} times&lt;/p&gt;
-          &lt;button onClick={() =&gt; setCount(count + 1)}&gt;
-            Click me
-          &lt;/button&gt;
-        &lt;/div&gt;
-      );
-    }
+    export default Todos;
   </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">Todo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|16,26-32">
+    import React, { Component } from 'react';
+
+    class Todo extends Component {
+
+        render() {
+            return (
+                &lt;React.Fragment &gt;
+                    &lt;td style={{ width: 10 }} className="text-center"&gt;
+                        {this.props.index}
+                    &lt;/td&gt;
+                    &lt;td style={{ width: 15 }} className="text-center"&gt;
+                        &lt;input type="checkbox" defaultChecked={this.props.todo.isDone}  onChange={() =&gt; this.props.fooDoneDone(this.props.todo)} /&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        {
+                            this.renderTodo()
+                        }
+                    &lt;/td&gt;
+                    &lt;td style={{ width: 100 }} className="text-center"&gt;
+                        &lt;button onClick={() =&gt; this.props.fooDelete(this.props.todo.id)} className="btn btn-danger btn-sm"&gt;Delete&lt;/button&gt;
+                    &lt;/td&gt;
+                &lt;/React.Fragment&gt;
+            );
+        }
+
+        renderTodo(){
+            if(this.props.todo.isDone)
+            return &lt;s&gt;{this.props.todo.value}&lt;/s&gt;;
+            else
+            return this.props.todo.value;
+        }
+
+    }
+
+    export default Todo;
+  </code></pre>
+</section>
+</section>
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">AppTodo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|30-34,38-43">
+import React, { Component } from 'react';
+
+class AddTodo extends Component {
+    state = {
+        defaultValue: "",
+        value: this.props.addTodoValue
+    }
+
+    handleChange = (e) =&gt; {
+        //Updating local component state
+        this.setState({
+            value: e.target.value
+        });
+    }
+
+    handleKeyPress = (e) =&gt; {
+        if (e.key === "Enter") {
+            this.addTodo();
+        }
+    };
+
+    clearInput = () =&gt; {
+        //Clear existing value in input
+        document.getElementById("todoValue").value = "";
+        
+        //Updating local component state
+        this.setState({value:""});
+    }
+
+    addTodo = () =&gt; {
+        //Call method reference in Todos component using props
+        this.props.fooAddTodo(this.state.value);
+        this.clearInput();
+    }
+
+    render() {
+        return (
+            &lt;div className="input-group mb-3"&gt;
+                &lt;input type="text" className="form-control" id="todoValue" placeholder="ToDo" onChange={this.handleChange} onKeyPress={this.handleKeyPress}/&gt;
+                &lt;div className="input-group-append"&gt;
+                    &lt;button onClick={this.addTodo} className="btn btn-outline-secondary" type="button" id="button-addon2"&gt;Add New ToDo&lt;/button&gt;
+                &lt;/div&gt;
+            &lt;/div&gt;
+        );
+    }
+}
+
+export default AddTodo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">2. react 구현 예제</p>
+  <img data-src="/image/redux/todo.png">
+  <aside class="notes">
+    현재 앱 구조를 본다면 다음과 같습니다. <br>
+    Todos가 컨테이너로 Todo와 AddTodo를 가지고 있는 형태입니다.
+  </aside>
+  </section>
+</section>
+
+<section>
+  <section data-auto-animate>
+    <p class="h-position">2. react 구현 예제</p>
+    <img data-src="/image/redux/add_component.png">
+    <aside class="notes">
+      todo에 기능을 추가해보겠습니다. <br>
+      number text mix 컨테이너를 새롭게 만듭니다 <br>
+      todo는 새로운 컴포넌트들을 가지고 있는 컨테이너가 됩니다.
+    </aside>
+    </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">2. react 구현 예제</p>
+    <p>$ git checkout add_component</p>
+  </section>  
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">Todo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|3-5|30-45">
+import React, { Component } from 'react';
+
+import MixTodo from './MixTodo';
+import NumberTodo from './NumberTodo';
+import TextTodo from './TextTodo';
+
+class Todo extends Component {
+
+    render() {
+        return (
+            &lt;React.Fragment &gt;
+                &lt;td style={{ width: 10 }} className="text-center"&gt;
+                    {this.props.index}
+                &lt;/td&gt;
+                &lt;td style={{ width: 15 }} className="text-center"&gt;
+                    &lt;input type="checkbox" defaultChecked={this.props.todo.isDone}  onChange={() =&gt; this.props.fooDoneDone(this.props.todo)} /&gt;
+                &lt;/td&gt;
+                &lt;td&gt;
+                    {
+                        this.renderTodo()
+                    }
+                &lt;/td&gt;
+                &lt;td style={{ width: 100 }} className="text-center"&gt;
+                    &lt;button onClick={() =&gt; this.props.fooDelete(this.props.todo.id)} className="btn btn-danger btn-sm"&gt;Delete&lt;/button&gt;
+                &lt;/td&gt;
+            &lt;/React.Fragment&gt;
+        );
+    }
+
+    renderTodo(){
+        if(this.props.todo.isDone){
+          return &lt;s&gt;{this.props.todo.value}&lt;/s&gt;;
+        }else{
+          let str = this.props.todo.value;
+          let pattern_num = /[0-9]/;	// 숫자 
+          let pattern_eng = /[a-zA-Z]/;	// 문자 
+          if( pattern_num.test(str) && pattern_eng.test(str)){
+            return &lt;MixTodo value={str}/&gt;
+          } else if( pattern_num.test(str)){
+            return &lt;NumberTodo value={str}/&gt;
+          } else {
+            return &lt;TextTodo value={str}/&gt;
+          }
+        }
+    }
+
+}
+
+export default Todo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">MixTodo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|4">
+import React from 'react';
+
+const todoStyle = {
+  color: 'red',
+}
+
+const MixTodo = ({
+  value
+}) =&gt; {
+  return (
+    &lt;div style={todoStyle}&gt;
+      { value }
+    &lt;/div&gt;
+  )
+};
+
+export default MixTodo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">NumberTodo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|4">
+    import React from 'react';
+
+    const todoStyle = {
+      color: 'blue',
+    }
+    
+    const NumberTodo = ({
+      value
+    }) =&gt; {
+      return (
+        &lt;div style={todoStyle}&gt;
+          { value }
+        &lt;/div&gt;
+      )
+    };
+    
+    export default NumberTodo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">TextTodo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|4">
+    import React from 'react';
+
+    const todoStyle = {
+      color: 'aqua',
+    }
+    
+    const TextTodo = ({
+      value
+    }) =&gt; {
+      return (
+        &lt;div style={todoStyle}&gt;
+          { value }
+        &lt;/div&gt;
+      )
+    };
+    
+    export default TextTodo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">2. react 구현 예제</p>
+    <p>새로운 요구사항</p>
+    <img data-src="/image/redux/new_feature.png" height="550px">
+    <aside class="notes">
+      이번에 새로운 요구사항이 왔습니다. <br>
+      AddTodo에서 값을 입력할때 문자열만 존재한다면 <br>
+      기존 TextTodo에 background color를 변경해 달라는 요청입니다.
+    </aside>
+  </section>  
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">2. react 구현 예제</p>
+  <img data-src="/image/redux/lift.png">
+  </section>
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">2. react 구현 예제</p>
+  <img data-src="/image/redux/lift_1.png">
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">2. react 구현 예제</p>
+    <p>$ git checkout lift</p>
+  </section>  
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">Todos.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|28|77-89|97,102|44,56">
+    import React, { Component } from 'react';
+
+    import Todo from './Todo';
+    import AddTodo from './AddTodo';
+    
+    class Todos extends Component {
+    
+        //Component state with default values
+        state = {
+            addTodoValue: "",
+            todos: [
+                {
+                    id: 1,
+                    value: "todo 1",
+                    isDone: false
+                },
+                {
+                    id: 2,
+                    value: "todo 2",
+                    isDone: true
+                },
+                {
+                    id: 3,
+                    value: "todo 3",
+                    isDone: false
+                }
+            ],
+            isBackgroundColorChange: false
+        }
+    
+        //Local helper method to get date
+        getTime() {
+            let d = new Date();
+            var n = d.getTime();
+            return n;
+        }
+    
+        //method called from Todo component
+        handleDelete = todo =&gt; {
+            const todos = this.state.todos.filter((t) =&gt; {
+                return t.id !== todo
+            });
+            this.setState({ todos });
+            this.defaultBackgroundColor();
+        }
+    
+        handleDone = todo =&gt; {
+            const todos = [...this.state.todos];
+            todos.map((t) =&gt; {
+                if (t.id === todo.id) {
+                    t.isDone = !t.isDone;
+                }
+                return t;
+            });
+            this.setState({todos});
+            this.defaultBackgroundColor();
+        }
+    
+        //method called from AddTodo component
+        addNewTodo = value =&gt; {
+            if (value) {
+                const todos = [...this.state.todos];
+                todos.push(
+                    {
+                        id: this.getTime(),
+                        value: value,
+                        isDone: false
+                    }
+                );
+                this.setState({ addTodoValue: "", todos })
+                this.defaultBackgroundColor();
+            } else {
+                console.log("Please Add Todo Text");
+            }
+        }
+    
+        handleChangeBockground = (value) =&gt; {
+          let pattern_num = /[0-9]/;	// 숫자 
+          let pattern_eng = /[a-zA-Z]/;	// 문자 
+          if( !pattern_num.test(value) && pattern_eng.test(value)){
+            this.setState({isBackgroundColorChange: true});
+          }else {
+            this.setState({isBackgroundColorChange: false});
+          }
+        }
+    
+        defaultBackgroundColor = () =&gt; {
+          this.setState({isBackgroundColorChange: false});
+        }
+    
+        render() {
+            return (
+                &lt;table className="table"&gt;
+                    &lt;tbody&gt;
+                        {this.state.todos.map((todo, index) =&gt; (
+                            &lt;tr key={todo.id}&gt;
+                                &lt;Todo isBackgroundColorChange={this.state.isBackgroundColorChange} index={index+1} todo={todo} fooDelete={this.handleDelete} fooDoneDone={this.handleDone} /&gt;
+                            &lt;/tr&gt;
+                        ))}
+                        &lt;tr&gt;
+                            &lt;td colSpan="4" className="text-center"&gt;
+                                &lt;AddTodo handleChangeBockground={this.handleChangeBockground} fooAddTodo={this.addNewTodo} addTodoValue={this.state.addTodoValue} /&gt;
+                            &lt;/td&gt;
+                        &lt;/tr&gt;
+                    &lt;/tbody&gt;
+                &lt;/table&gt;
+            );
+        }
+    }
+    
+    export default Todos;
+  </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">AddTodos.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="10-11">
+    import React, { Component } from 'react';
+
+    class AddTodo extends Component {
+        state = {
+            defaultValue: "",
+            value: this.props.addTodoValue
+        }
+    
+        handleChange = (e) =&gt; {
+            const { handleChangeBockground } = this.props;
+            handleChangeBockground(e.target.value);
+            //Updating local component state
+            this.setState({
+                value: e.target.value
+            });
+        }
+    
+        handleKeyPress = (e) =&gt; {
+            if (e.key === "Enter") {
+                this.addTodo();
+            }
+        };
+    
+        clearInput = () =&gt; {
+            //Clear existing value in input
+            document.getElementById("todoValue").value = "";
+            
+            //Updating local component state
+            this.setState({value:""});
+        }
+    
+        addTodo = () =&gt; {
+            //Call method reference in Todos component using props
+            this.props.fooAddTodo(this.state.value);
+            this.clearInput();
+        }
+    
+        render() {
+            return (
+                &lt;div className="input-group mb-3"&gt;
+                    &lt;input type="text" className="form-control" id="todoValue" placeholder="ToDo" onChange={this.handleChange} onKeyPress={this.handleKeyPress}/&gt;
+                    &lt;div className="input-group-append"&gt;
+                        &lt;button onClick={this.addTodo} className="btn btn-outline-secondary" type="button" id="button-addon2"&gt;Add New ToDo&lt;/button&gt;
+                    &lt;/div&gt;
+                &lt;/div&gt;
+            );
+        }
+    }
+    
+    export default AddTodo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">Todo.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="42">
+    import React, { Component } from 'react';
+
+    import MixTodo from './MixTodo';
+    import NumberTodo from './NumberTodo';
+    import TextTodo from './TextTodo';
+    
+    class Todo extends Component {
+    
+        render() {
+            return (
+                &lt;React.Fragment &gt;
+                    &lt;td style={{ width: 10 }} className="text-center"&gt;
+                        {this.props.index}
+                    &lt;/td&gt;
+                    &lt;td style={{ width: 15 }} className="text-center"&gt;
+                        &lt;input type="checkbox" defaultChecked={this.props.todo.isDone}  onChange={() =&gt; this.props.fooDoneDone(this.props.todo)} /&gt;
+                    &lt;/td&gt;
+                    &lt;td&gt;
+                        {
+                            this.renderTodo()
+                        }
+                    &lt;/td&gt;
+                    &lt;td style={{ width: 100 }} className="text-center"&gt;
+                        &lt;button onClick={() =&gt; this.props.fooDelete(this.props.todo.id)} className="btn btn-danger btn-sm"&gt;Delete&lt;/button&gt;
+                    &lt;/td&gt;
+                &lt;/React.Fragment&gt;
+            );
+        }
+    
+        renderTodo(){
+            if(this.props.todo.isDone){
+              return &lt;s&gt;{this.props.todo.value}&lt;/s&gt;;
+            }else{
+              let str = this.props.todo.value;
+              let pattern_num = /[0-9]/;	// 숫자 
+              let pattern_eng = /[a-zA-Z]/;	// 문자 
+              if( pattern_num.test(str) && pattern_eng.test(str)){
+                return &lt;MixTodo value={str}/&gt;
+              } else if( pattern_num.test(str)){
+                return &lt;NumberTodo value={str}/&gt;
+              } else {
+                return &lt;TextTodo isBackgroundColorChange={this.props.isBackgroundColorChange} value={str} /&gt;
+              }
+            }
+        }
+    
+    }
+    
+    export default Todo;
+  </code></pre>
+</section>
+</section>
+
+<section>
+<section>
+  <p class="h-position">2. react 구현 예제</p>
+  <h2 data-id="code-title">TextTodos.js</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="1,9,11-21">
+    import React, {useState, useEffect} from 'react';
+
+    // const todoStyle = {
+    //   color: 'aqua',
+    // }
+    
+    const TextTodo = ({
+      value
+      ,isBackgroundColorChange
+    }) =&gt; {
+      const [todoStyle, setTodoStyle] = useState({});
+    
+      useEffect(() =&gt; {
+        let styled = {
+          color: 'aqua'
+        }
+        if(isBackgroundColorChange){
+          styled.backgroundColor = 'gray';
+          styled.color = 'white';
+        }
+        setTodoStyle(styled);
+      }, [value, isBackgroundColorChange]);
+      return (
+        &lt;div style={todoStyle}&gt;
+          { value }
+        &lt;/div&gt;
+      )
+    };
+    
+    export default TextTodo;
+  </code></pre>
+</section>
+</section>
+
+
+
+
+
+<section>
+  3. redux
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">3. redux</p>
+  <img data-src="/image/redux/lift_1.png">
+  </section>
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">3. redux</p>
+  <img data-src="/image/redux/lift_2.png" height="550px">
+  </section>
+</section>
+
+<section>
+<section data-auto-animate>
+  <p class="h-position">3. redux</p>
+  <h2 data-id="code-title">hell</h2>
+  <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="">
+    const Component = ({
+      id,
+      title,
+      name,
+      isLoading,
+      isRefresh,
+      isExpanded,
+      isPagination,
+      isVertical,
+      isSmall,
+      label,
+      size,
+      renderIcon,
+      handleClick,
+      handleSize,
+      ...
+      ...
+      ...
+      ...others
+    }) => {
+</code></pre>
+</section>
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">3. redux</p>
+  <img data-src="/image/redux/redux.png">
+  </section>
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">3. redux</p>
+  <img data-src="/image/redux/redux_text.png">
+  </section>
+</section>
+
+
+
+
+<section>
+  4. redux ducks pattern
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    #### Erik Rasmussen / ducks-modular-redux
+    [https://github.com/erikras/ducks-modular-redux](https://github.com/erikras/ducks-modular-redux)    
+  </textarea>
+</section>
+
+<section>
+  <section data-auto-animate >
+    <div>
+      <div class="text text-left">
+      <p class="h-position">4. redux ducks pattern</p>
+      <p>Ducks: Redux Reducer Bundles</p>
+      <p>저는 Redux 어플리케이션을 구축하는 과정에서, 한 번에 기능 한 부분을 만들 때, </p>
+      <p>각각의 use case에 따라 {actionTypes, actions, reducer} 한 벌을 계속 추가해야 된다는 것을 깨달았습니다. </p>
+      <p>저는 각각을 별도의 파일 심지어 폴더로 나누어두었지만, 95%의 경우에는 reducer/actions 한 쌍만이 서로 연관된 동작을 필요로 합니다.</p>
+      <p>제가 봤을 땐, 이러한 조각들이 포함된 하나의 독립된 모듈로 묶는 것이 더 의미가 있고, 라이브러리로 패키징하기에도 쉽습니다.</p>
+      </div>
+      <img data-src="/image/redux/duck.jpg">
+    </div>
+  </section>
+</section>
+
+<section>
+  <section data-auto-animate >
+    <div>
+      <div>
+      <p class="h-position">4. redux ducks pattern</p>
+      <p>액션 타입 정의하기</p>
+      <p>액션 생성 함수 만들기</p>
+      <p>초기 상태 정의하기</p>
+      <p>리듀서 정의하기</p>
+      </div>
+    </div>
+  </section>
+</section>
+
+
+<section>
+  5. redux 구현 예제 ( ducks pattern )
+</section>
+
+<section data-markdown>
+  <textarea data-template>
+    ### 예제 실행
+    ```
+    $ git checkout redux
+
+    $ yarn install
+    $ yarn start
+    ```
+  </textarea>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">base.js</h2>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|1-2|4-6|8-10|12-15|17-23">
+      import { createAction, handleActions } from 'redux-actions';
+      import { fromJS } from 'immutable';
+      
+      //액션 타입 정의하기
+      const SHOW_BACKGROUND_COLOR = 'base/SHOW_BACKGROUND_COLOR';
+      const HIDE_BACKGROUND_COLOR = 'base/HIDE_BACKGROUND_COLOR';
+      
+      //액션 생성 함수 만들기
+      export const showBackgroundColor = createAction(SHOW_BACKGROUND_COLOR);
+      export const hideBackgroundColor = createAction(HIDE_BACKGROUND_COLOR);
+      
+      //초기상태 정의하기
+      const initialState = fromJS({
+        isBackgroundColorChange: false,
+      });
+      
+      //리듀서 정의하기
+      export default handleActions({
+        [SHOW_BACKGROUND_COLOR]: (state, action) => state
+          .set('isBackgroundColorChange',true),
+        [HIDE_BACKGROUND_COLOR]: (state, action) => state
+          .set('isBackgroundColorChange',false)
+      }, initialState);
+    </code></pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">index.js</h2>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|7-17">
+      import React from 'react';
+      import { render } from 'react-dom';
+      import './index.css';
+      import App from './App';
+      import 'bootstrap/dist/css/bootstrap.css';
+      
+      import { createStore, combineReducers } from 'redux';
+      import { Provider } from 'react-redux';
+      import * as modules from './store/modules';
+      
+      const reducers = combineReducers(modules);
+      const store = createStore(reducers);
+      render(
+        &lt;Provider store={store}&gt;
+          &lt;App /&gt;
+        &lt;/Provider&gt;,
+        document.getElementById('root')
+      );
+    </code></pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">AppTodo.js</h2>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|2-4|64-69|12-21|13,17,19|24,43">
+      import React, { Component } from 'react';
+      import { connect } from 'react-redux';
+      import { bindActionCreators } from 'redux';
+      import * as baseActions from '../store/modules/base';
+      
+      class AddTodo extends Component {
+          state = {
+              defaultValue: "",
+              value: this.props.addTodoValue
+          }
+          
+          handleChangeBackground = (value) =&gt;{
+            const { BaseActions } = this.props;
+              let pattern_num = /[0-9]/;	// 숫자 
+              let pattern_eng = /[a-zA-Z]/;	// 문자 
+              if( !pattern_num.test(value) && pattern_eng.test(value)){
+                BaseActions.showBackgroundColor();
+              }else {
+                BaseActions.hideBackgroundColor();
+              }
+          }
+      
+          handleChange = (e) =&gt; {
+              this.handleChangeBackground(e.target.value);
+              //Updating local component state
+              this.setState({
+                  value: e.target.value
+              });
+          }
+      
+          handleKeyPress = (e) =&gt; {
+              if (e.key === "Enter") {
+                  this.addTodo();
+              }
+          };
+      
+          clearInput = () =&gt; {
+              //Clear existing value in input
+              document.getElementById("todoValue").value = "";
+              
+              //Updating local component state
+              this.setState({value:""});
+              this.handleChangeBackground("");
+          }
+      
+          addTodo = () =&gt; {
+              //Call method reference in Todos component using props
+              this.props.fooAddTodo(this.state.value);
+              this.clearInput();
+          }
+      
+          render() {
+              return (
+                  &lt;div className="input-group mb-3"&gt;
+                      &lt;input type="text" className="form-control" id="todoValue" placeholder="ToDo" onChange={this.handleChange} onKeyPress={this.handleKeyPress}/&gt;
+                      &lt;div className="input-group-append"&gt;
+                          &lt;button onClick={this.addTodo} className="btn btn-outline-secondary" type="button" id="button-addon2"&gt;Add New ToDo&lt;/button&gt;
+                      &lt;/div&gt;
+                  &lt;/div&gt;
+              );
+          }
+      }
+      
+      export default connect(
+        null,
+        dispatch =&gt; ({
+          BaseActions: bindActionCreators(baseActions, dispatch),
+        }),
+      )(AddTodo);
+    </code></pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">TextTodo.js</h2>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|2|27-32|6,14-17,19">
+      import React, {useState, useEffect} from 'react';
+      import { connect } from 'react-redux';
+      
+      const TextTodo = ({
+        value
+        ,isBackgroundColorChange
+      }) =&gt; {
+        const [todoStyle, setTodoStyle] = useState({});
+      
+        useEffect(() =&gt; {
+          let styled = {
+            color: 'aqua'
+          }
+          if(isBackgroundColorChange){
+            styled.backgroundColor = 'gray';
+            styled.color = 'white';
+          }
+          setTodoStyle(styled);
+        }, [value, isBackgroundColorChange]);
+        return (
+          &lt;div style={todoStyle}&gt;
+            { value }
+          &lt;/div&gt;
+        )
+      };
+      
+      export default connect(
+        state =&gt; ({
+          isBackgroundColorChange: state.base.get('isBackgroundColorChange'),
+        }),
+        null,
+      )(TextTodo);
+      
+    </code></pre>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">TextTodo.js</h2>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|2,8">
+      import React, {useState, useEffect} from 'react';
+      import { useSelector } from 'react-redux'
+      
+      const TextTodo = ({
+        value
+      }) =&gt; {
+        const [todoStyle, setTodoStyle] = useState({});
+        const isBackgroundColorChange = useSelector(state =&gt; state.base.get('isBackgroundColorChange'))
+      
+        useEffect(() =&gt; {
+          let styled = {
+            color: 'aqua'
+          }
+          if(isBackgroundColorChange){
+            styled.backgroundColor = 'gray';
+            styled.color = 'white';
+          }
+          setTodoStyle(styled);
+        }, [value, isBackgroundColorChange]);
+        return (
+          &lt;div style={todoStyle}&gt;
+            { value }
+          &lt;/div&gt;
+        )
+      };
+      
+      export default TextTodo;
+    </code></pre>
+    <aside class="notes">
+      리엑트 훅은 useSelector를 지원합니다. <br>
+      connect 함수보다 더 가볍고 사용하기 편합니다.
+    </aside>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <div class="text">
+      <p>Todo.js / Todos.js</p>
+      <p>는 원상복구 시킵니다.</p>
+      <br>
+      <p>기능이 정상적으로 작동하는지 확인</p>
+    </div>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">immutable</h2>
+    <a href="https://immutable-js.github.io/immutable-js/">https://immutable-js.github.io/immutable-js/</a>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="|2,5,12,15">
+      // base.js
+          import { fromJS } from 'immutable';
+          
+          //초기상태 정의하기
+          const initialState = fromJS({
+            isBackgroundColorChange: false,
+          });
+          
+          //리듀서 정의하기
+          export default handleActions({
+            [SHOW_BACKGROUND_COLOR]: (state, action) => state
+              .set('isBackgroundColorChange',true),
+      
+      // TextTodo.js
+          const isBackgroundColorChange = useSelector(state => state.base.get('isBackgroundColorChange'))
+    </code></pre>
+    <aside class="notes">
+      immutable은 페이스북에서 만든 상태 관리 라이브러리 입니다
+      불변성객체를 관리하는것이 생각보다 코드가 복잡해지기 때문에 많이 사용합니다.
+    </aside>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <h2 data-id="code-title">불변성</h2>
+    <pre data-id="code-animation"><code class="hljs" data-trim data-line-numbers="">
+      var obj = {
+        name: 'foo',
+      };
+      
+      var newObj = obj;
+      console.log(newObj.name); // foo
+
+      obj.name = 'bar';
+      
+      console.log(obj.name); // bar
+      console.log(newObj.name);  // bar
+      console.log(obj === newObj); // true
+
+      // 불변성
+      var object = {
+        foo: 'hello',
+        bar: 'world'
+      };
+      var differentObject = {
+        ...object,
+        baz: 'bye'
+      };
+      console.log(differentObject === object); // false
+
+    </code></pre>
+    <aside class="notes">
+      객체를 예로 들어 보겠습니다. newObj는 obj값의 주소를 참조하고 있으므로 <br>
+      obj 값이 바뀌면서 값이 같이 바뀌었습니다. <br>
+      밑에 쪽은 Spread operator 문법으로새로운 객체를 생성하여 복사하는 모습입니다 <br>
+    </aside>
+  </section>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">5. redux 구현 예제 ( ducks pattern )</p>
+    <div class="text">
+      <p>React에서는 왜 상태값이 불변성을 유지해야 할까요</p>
+      <p>의도하지 않은 특정 객체가 변경되면 참조하고 있던 객체에서도 변경이 일어난다.</p>
+      <p>이 상태를 유지할 경우 side-effect가 발생할 확률과 프로그램의 복잡도가 높아진다.</p>
+      <p>변경이 일어난 객체의 프로퍼티만 비교함으로써 React에서 최적화가 가능하다.</p>
+    </div>
+    <aside class="notes">
+      React는 실제로 DOM을 제어하는 것이 아니라 <br>
+      중간에 가상의 DOM(virtualDOM)을 두고 관리하기 때문에 빠르게 UI 변화에 대한 관리가 가능합니다. <br>
+      React는 트리 변환에 대해 비교 알고리즘을 통해 재조정(Reconciliation)이 가능합니다. <br>
+      이 과정을 통해 변화된 엘리먼트만 실제 DOM에서 업데이트됩니다. <br>
+    </aside>
+  </section>
+</section>
+
+<section>
+  6. redux 실습
+</section>
+<section data-markdown>
+  <textarea data-template>
+    ### 예제 실행
+    ```
+    $ git clone https://github.com/michisarm/redux_example.git
+    $ cd redux_example
+
+    $ yarn install
+    $ git checkout toast
+    $ yarn start
+
+    ```
+  </textarea>
+</section>
+
+<section>
+  <section>
+    <p class="h-position">6. redux 실습</p>
+    <p>요구사항</p>
+    <div class="text text-left">
+      <p>App.js 파일 하단에 새로운 컴포넌트가 생성되었습니다 ( ToastContainer )</p>
+      <p>현재 toast컴포넌트는 value 값이 들어오면 2초간 toast 팝업이 노출되고 자동으로 사라집니다.</p>
+      <p>AddTodo에서 새로운 Todo 등록시 toast 팝업에 메세지를 입력된 값으로 변경하여 노출시켜주세요.</p>
+      <p>(기존 toast에 들어오는 value 값은 무시해주세요.)</p>
+      <br>
+      <p>새로운 redux 모듈을 만들어 주세요 (base는 사용하지 않습니다.)</p>
+      <p>새로운 모듈 이름은  'test.js' 입니다.</p>
+    </div>
+  </section>
+</section>
+
+
+<section>
+  7. redux 어디에 쓰나요
+</section>
+
+<section>
+  <section data-auto-animate>
+  <p class="h-position">7. redux 어디에 쓰나요</p>
+  <img data-src="/image/redux/facebook_main.png">
+  <aside class="notes">
+    로그인 관련 / 알림 관련 
+  </aside>
+  </section>
+  <section data-auto-animate>
+    <p class="h-position">7. redux 어디에 쓰나요</p>
+    <img data-src="/image/redux/facebook.png">
+    <aside class="notes">
+      화면에 독립적으로 움직이는 패널
+    </aside>
+  </section>
+  <section data-auto-animate>
+    <p class="h-position">7. redux 어디에 쓰나요</p>
+    <p>redux 로 전부 쓴다면 어떻게 될까</p>
+    <aside class="notes">
+      state를 사용하지 않고 모든곳에서 redux를 사용한다면 <br>
+      props로 store가 내려주는 데이터만 기다리고 있는 형태가 됩니다.<br>
+      비동기이기 때문에 병목현상이 생기고 렌더링이 부하되어 성능 이슈가 발생합니다.<br>
+      모듈을 나누는 이유도 같은 이유입니다.<br>
+    </aside>
+  </section>
+  <section data-auto-animate>
+    <p class="h-position">7. redux 어디에 쓰나요</p>
+    <p>추가적으로 반드시 알아야 할 것</p>
+    <img data-src="/image/redux/middleware.png">
+    <aside class="notes">
+      실무에선 데이터를 비동기로 연동해서 사용
+    </aside>
+  </section>
 </section>
